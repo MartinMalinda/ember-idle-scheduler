@@ -27,7 +27,7 @@ Simply inject a service and add a callback to the queue.
   }
 ```
 
-`requestIdleCallback` can be used to delay non essential logic to lower the time to interactivity. Non essential logic can be firing up analytics, including external scripts (that are not being used in the current route) or loading content in advance.
+`requestIdleCallback` can be used to delay non essential logic to lower the time to interactivity. Non essential logic can be used for firing up analytics, including external scripts (that are not being used in the current route) or loading content in advance.
 
 In this example, google analytics script is included in first idle frame and a track request is fired in next one.
 
