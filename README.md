@@ -2,11 +2,13 @@
 
 Simple promise wrap around `requestIdleCallback` and a promise (priority) queue.
 
+--
+
+For more complex logic consider using skyrocket (https://github.com/runspired/skyrocket) and/or igniter (https://github.com/runspired/igniter)
+
 ## The problem
 
-Simply calling `requestIdleCallback` from different places in the code can result that all these callbacks are fired within one same idle frame. This can cause jank, or delay time to interactivity. Calling `requestIdleCallback` withing `requestIdleCallback` ensures that the next logic is executed in next idle frame. But this is not always possible.
-
-(For some usecases usin Web Worker is more effective. RIC is easier to set up though).
+Simply calling `requestIdleCallback` from different places in the code can cause that all these callbacks are fired within one same idle frame. This can cause jank, or delay time to interactivity. Calling `requestIdleCallback` within previous `requestIdleCallback` ensures that the next logic is executed in next idle frame. But this is not always feasible.
 
 ## The queue
 
