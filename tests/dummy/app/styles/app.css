@@ -1,0 +1,13 @@
+body {
+  height: 2000px;
+}
+
+.boxes {
+  position: fixed;
+}
+
+.box {
+  display: inline-block;
+  border: 3px solid red;
+  // transition: 0.5s all;
+}
