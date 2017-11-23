@@ -1,27 +1,26 @@
 import Ember from 'ember';
 import PQueue from 'npm:p-queue';
 
-const {RSVP, computed} = Ember;
+const { RSVP, computed } = Ember;
 
 export default Ember.Service.extend({
 
   isWaiting: false,
-  queue: computed(function(){
+  queue: computed(function() {
     return new PQueue({concurrency: 1, promise: RSVP.Promise});
   }),
 
-  request(timeout){
+  request(timeout) {
     return new RSVP.Promise(innerResolve => {
-      if(typeof requestIdleCallback === 'function'){
-        return requestIdleCallback(innerResolve, {timeout})
+      if ('requestIdleCallback' in window) {
+        return window.requestIdleCallback(innerResolve, {timeout})
       }
 
-    return setTimeout(innerResolve, 0);
+    return Ember.run.next(innerResolve);
     });
   },
 
-  schedule(timeout){
+  schedule(timeout) {
     return this.get('queue').add(() => this.request(timeout));
-  },
-
+  }
 });
