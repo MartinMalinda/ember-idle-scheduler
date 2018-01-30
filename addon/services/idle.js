@@ -6,13 +6,19 @@ const { RSVP, computed } = Ember;
 export default Ember.Service.extend({
 
   isWaiting: false,
+
+  useRequestIdleCallbackInTests: false,
+  useRequestIdleCallback: computed('useRequestIdleCallbackInTests', function() {
+    return 'requestIdleCallback' in window && (!Ember.testing || this.get('useRequestIdleCallbackInTests'));
+  }),
+
   queue: computed(function() {
     return new PQueue({concurrency: 1, promise: RSVP.Promise});
   }),
 
   request(timeout) {
     return new RSVP.Promise(innerResolve => {
-      if ('requestIdleCallback' in window) {
+      if (this.get('useRequestIdleCallback')) {
         return window.requestIdleCallback(innerResolve, {timeout})
       }
 
